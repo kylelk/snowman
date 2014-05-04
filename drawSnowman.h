@@ -98,7 +98,7 @@ void drawSnowman()
     glTranslatef(-1.0, 1.0, 0.0);
     glRotatef(0.0, 0.0, 1.0, 0.0);
     glColor3f(1.0, 1.0, 0.0);
-    gluCylinder(quadratic, 0.075, 0.075, 2.5, 32,16);
+    gluCylinder(quadratic, 0.075, 0.075, 2.5, 32,32);
     glPopMatrix();
     
     

@@ -4,6 +4,7 @@
 #include <stdlib.h> // standard definitions
 #include <math.h> // math definitions
 #include <stdio.h> // standard I/O
+#include <string.h>
 
 // include files are in a slightly different location for MacOS
 #ifdef __APPLE__
@@ -13,17 +14,19 @@
 #endif
 
 
-/* START objects */
 
+/* START objects */
 #include "picket_fence.h"
 #include "drawSnowman.h"
-
+#include "road.h"
+#include "town_square.h"
 /* END objects */
 
 
 
 // escape key (for exit)
 #define ESC 27
+#define CHECK_FREQ 5
 
 //----------------------------------------------------------------------
 // Global variables
@@ -53,6 +56,8 @@ float deltaAngle = 0.0; // additional angle change when dragging
 int isDragging = 0; // true when dragging
 int xDragStart = 0; // records the x-coordinate when dragging starts
 
+
+int update_count = 0;
 unsigned int random_snowmen[36];
 
 
@@ -89,15 +94,43 @@ void update(void)
     if (deltaMove) { // update camera position
         x += deltaMove * lx * 0.1;
         y += deltaMove * ly * 0.1;
-        printf("%f, %f\n", x,y);
+        //printf("%f, %f\n", x,y);
         
-//        for(i = -3; i < 3; i++){
-//            for(j = -3; j < 3; j++) {
-//                glTranslatef(i*12, j*12, 0);
-//            }
-//        }
     }
     glutPostRedisplay(); // redisplay everything
+}
+
+
+void render_objects(void) {
+    
+    int i, j;
+    
+    // Draw ground - 200x200 square colored green
+    glColor3f(0.0, 0.7, 0.0);
+    glBegin(GL_QUADS);
+    glVertex3f(-100.0, -100.0, 0.0);
+    glVertex3f(-100.0,  100.0, 0.0);
+    glVertex3f( 100.0,  100.0, 0.0);
+    glVertex3f( 100.0, -100.0, 0.0);
+    glEnd();
+    
+    // render the center of the town
+    town_square();
+    
+    for(i = -3; i < 4; i++){
+        for(j = -3; j < 4; j++) {
+            if ( (i==0)&&(j==0) ) {
+                continue;
+            }
+            glPushMatrix();
+            glTranslatef(i*12, j*12, 0);
+            // Draw 36 snow men
+            drawSnowman();
+            picket_fence();
+            glPopMatrix();
+        }
+    }
+    road();
 }
 
 //----------------------------------------------------------------------
@@ -124,57 +157,8 @@ void renderScene(void)
               x + lx, y + ly, 1.0,
               0.0,    0.0,    1.0);
     
-    // Draw ground - 200x200 square colored green
-    glColor3f(0.0, 0.7, 0.0);
-    glBegin(GL_QUADS);
-    glVertex3f(-100.0, -100.0, 0.0);
-    glVertex3f(-100.0,  100.0, 0.0);
-    glVertex3f( 100.0,  100.0, 0.0);
-    glVertex3f( 100.0, -100.0, 0.0);
-    glEnd();
     
-    // draw a picket fence
-    // declared in "picket_fence.h"
-    //picket_fence();
-
-    // Draw 36 snow men
-    //int snowman_number=0;
-    for(i = -3; i < 3; i++){
-        for(j = -3; j < 3; j++) {
-            glPushMatrix();
-            //int rand_n = random_snowmen[snowman_number];
-            //glTranslatef(i*7.5+(rand_n%5), j*7.5+(rand_n%5), 0);
-            glTranslatef(i*12, j*12, 0);
-            drawSnowman();
-            picket_fence();
-            //snowman_number++;
-            glPopMatrix();
-        }
-    }
-    
-    for(i = -3; i < 3; i++){
-        for(j = -3; j < 3; j++) {
-            glPushMatrix();
-            
-            // street
-            glBegin(GL_QUADS);
-            glColor3f(0.0, 0.0, 0.0);
-            glVertex3f( -40, (i*12)+5, 0.001 );
-            glVertex3f( -40, (i*12)+7, 0.001 );
-            glVertex3f( 40,  (i*12)+7, 0.001 );
-            glVertex3f( 40,  (i*12)+5, 0.001 );
-            glEnd();
-            glBegin(GL_QUADS);
-            glColor3f(0.0, 0.0, 0.0);
-            glVertex3f( (i*12)+5, -40, 0.001 );
-            glVertex3f( (i*12)+7, -40, 0.001 );
-            glVertex3f( (i*12)+7,  40, 0.001 );
-            glVertex3f( (i*12)+5,  40, 0.001 );
-            glEnd();
-            
-            glPopMatrix();
-        }
-    }
+    render_objects();
     
     glutSwapBuffers(); // Make it all visible
 }
@@ -261,11 +245,7 @@ int main(int argc, char **argv)
     glutInitWindowSize(800, 500);
     glutCreateWindow("snowman land");
     //glutFullScreen();
-    
-    int i;
-    for (i=0; i<=36; i++) {
-        random_snowmen[i] = rand();
-    }
+
     
     // register callbacks
     glutReshapeFunc(changeSize); // window reshape callback
