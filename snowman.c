@@ -1,23 +1,3 @@
-//----------------------------------------------------------------------
-//	Best if viewed with tab stops set every 2 columns.
-//----------------------------------------------------------------------
-//	File: opengl-3D-sample.cpp - Sample 3D OpenGL/GLUT program
-//	Origin: Lighthouse3D (heavily modified by Dave Mount)
-//
-//	This is a sample program that illustrates OpenGL and GLUT. It
-//	renders a picture of 36 snowmen. The camera can be moved by dragging
-//	the mouse. The camera moves forward by hitting the up-arrow key and
-//	back by moving the down-arrow key. Hit ESC, 'q' or 'Q' to exit.
-//
-//	Warning #1: This program uses the function glutSpecialUpFunc, which
-//	may not be available in all GLUT implementations. If your system
-//	does not have it, you can comment this line out, but the up arrow
-//	processing will not be correct.
-//
-//	Warning #2: This is a minimalist program. Very little attention has
-//	been paid to good programming technique.
-//----------------------------------------------------------------------
-
 // gcc -o snowman snowman.c -framework GLUT -framework OpenGL
 
 
