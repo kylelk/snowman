@@ -248,7 +248,7 @@ int main(int argc, char **argv)
 {
     printf("\n\
            -----------------------------------------------------------------------\n\
-           OpenGL Sample Program:\n\
+           OpenGL snowman game:\n\
            - Drag mouse left-right to rotate camera\n\
            - Hold up-arrow/down-arrow to move camera forward/backward\n\
            - q or ESC to quit\n\
