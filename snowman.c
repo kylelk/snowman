@@ -26,7 +26,8 @@
 
 // escape key (for exit)
 #define ESC 27
-#define CHECK_FREQ 5
+
+#define MIN_VIEW_HEIGHT 0.1
 
 //----------------------------------------------------------------------
 // Global variables
@@ -45,7 +46,11 @@
 
 // Camera position
 float x = 0.0, y = -5.0; // initially 5 units south of origin
+float sx = 0.0, sy = 1.0; // camera side position
 float deltaMove = 0.0; // initially camera doesn't move
+float sideMove = 0.0;
+float cameraHeightMove = 0.0;
+float camera_height = 1.0;
 
 // Camera direction
 float lx = 0.0, ly = 1.0; // camera points initially along y-axis
@@ -95,8 +100,23 @@ void update(void)
         x += deltaMove * lx * 0.1;
         y += deltaMove * ly * 0.1;
         //printf("%f, %f\n", x,y);
-        
     }
+    
+    if (cameraHeightMove == 1) {
+        camera_height += 0.1;
+    }
+    else if (cameraHeightMove == 2){
+        camera_height -= 0.1;
+        
+        if (camera_height < MIN_VIEW_HEIGHT) {
+            camera_height=0.1;
+        }
+
+    }
+//    if (sideMove == 1) {
+//    }
+//    else if (sideMove == 2){
+//    }
     glutPostRedisplay(); // redisplay everything
 }
 
@@ -114,11 +134,13 @@ void render_objects(void) {
     glVertex3f( 100.0, -100.0, 0.0);
     glEnd();
     
+    
     // render the center of the town
     town_square();
     
     for(i = -3; i < 4; i++){
         for(j = -3; j < 4; j++) {
+            // skip drawing in the center
             if ( (i==0)&&(j==0) ) {
                 continue;
             }
@@ -127,6 +149,7 @@ void render_objects(void) {
             // Draw 36 snow men
             drawSnowman();
             picket_fence();
+            
             glPopMatrix();
         }
     }
@@ -153,9 +176,9 @@ void renderScene(void)
     // Set the camera centered at (x,y,1) and looking along directional
     // vector (lx, ly, 0), with the z-axis pointing up
     gluLookAt(
-              x,      y,      1.0,
-              x + lx, y + ly, 1.0,
-              0.0,    0.0,    1.0);
+              x,      y,      camera_height,
+              x + lx, y + ly, camera_height,
+              0.0,    0.0,    camera_height);
     
     
     render_objects();
@@ -178,16 +201,41 @@ void processNormalKeys(unsigned char key, int xx, int yy)
 void pressSpecialKey(int key, int xx, int yy)
 {
     switch (key) {
-        case GLUT_KEY_UP : deltaMove = 1.0; break;
-        case GLUT_KEY_DOWN : deltaMove = -1.0; break;
+        case GLUT_KEY_UP:
+            deltaMove = 1.0;
+            break;
+        case GLUT_KEY_DOWN:
+            deltaMove = -1.0;
+            break;
+        case GLUT_KEY_LEFT:
+            break;
+        case GLUT_KEY_RIGHT:
+            break;
+        case GLUT_KEY_PAGE_UP:
+            cameraHeightMove = 1;
+            break;
+        case GLUT_KEY_PAGE_DOWN:
+            cameraHeightMove = 2;
+            break;
     }
 }
 
 void releaseSpecialKey(int key, int x, int y)
 {
     switch (key) {
-        case GLUT_KEY_UP : deltaMove = 0.0; break;
-        case GLUT_KEY_DOWN : deltaMove = 0.0; break;
+        case GLUT_KEY_UP:
+            deltaMove = 0.0;
+            break;
+        case GLUT_KEY_DOWN:
+            deltaMove = 0.0;
+            break;
+        case GLUT_KEY_PAGE_UP:
+            cameraHeightMove = 0.0;
+            break;
+        case GLUT_KEY_PAGE_DOWN:
+            cameraHeightMove = 0.0;
+            break;
+
     }
 }
 

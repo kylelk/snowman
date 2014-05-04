@@ -11,16 +11,16 @@ void picket_fence(void) {
     glColor3f(  1,  1,  1 );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.256 );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.256+PICKET_WIDTH );
-    glVertex3f( FENCE_SIZE, -FENCE_SIZE, 0.256 );
     glVertex3f( FENCE_SIZE, -FENCE_SIZE, 0.256+PICKET_WIDTH );
+    glVertex3f( FENCE_SIZE, -FENCE_SIZE, 0.256 );
     glEnd();
     // top fence rail
     glBegin(GL_QUADS);
     glColor3f(  1,  1,  1 );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.744 );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.744-PICKET_WIDTH );
-    glVertex3f( FENCE_SIZE, -FENCE_SIZE, 0.744 );
     glVertex3f( FENCE_SIZE, -FENCE_SIZE, 0.744-PICKET_WIDTH );
+    glVertex3f( FENCE_SIZE, -FENCE_SIZE, 0.744 );
     glEnd();
     
     // south
