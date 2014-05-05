@@ -8,7 +8,7 @@ void picket_fence(void) {
     // north
     // bottom fence rail
     glBegin(GL_QUADS);
-    glColor3f(  1,  1,  1 );
+    glColor3f(  0.91,  0.76,  0.65 );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.256 );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.256+PICKET_WIDTH );
     glVertex3f( FENCE_SIZE, -FENCE_SIZE, 0.256+PICKET_WIDTH );
@@ -16,7 +16,7 @@ void picket_fence(void) {
     glEnd();
     // top fence rail
     glBegin(GL_QUADS);
-    glColor3f(  1,  1,  1 );
+    glColor3f(  0.91,  0.76,  0.65 );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.744 );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.744-PICKET_WIDTH );
     glVertex3f( FENCE_SIZE, -FENCE_SIZE, 0.744-PICKET_WIDTH );
@@ -26,7 +26,7 @@ void picket_fence(void) {
     // south
     // bottom fence rail
     glBegin(GL_QUADS);
-    glColor3f(  1,  1,  1 );
+    glColor3f(  0.91,  0.76,  0.65 );
     glVertex3f(-FENCE_SIZE, FENCE_SIZE, 0.256 );
     glVertex3f(-FENCE_SIZE, FENCE_SIZE, 0.256+PICKET_WIDTH );
     glVertex3f( FENCE_SIZE, FENCE_SIZE, 0.256+PICKET_WIDTH );
@@ -34,7 +34,7 @@ void picket_fence(void) {
     glEnd();
     // top fence rail
     glBegin(GL_QUADS);
-    glColor3f(  1,  1,  1 );
+    glColor3f(  0.91,  0.76,  0.65 );
     glVertex3f(-FENCE_SIZE, FENCE_SIZE, 0.744 );
     glVertex3f(-FENCE_SIZE, FENCE_SIZE, 0.744-PICKET_WIDTH );
     glVertex3f( FENCE_SIZE, FENCE_SIZE, 0.744-PICKET_WIDTH );
@@ -44,7 +44,7 @@ void picket_fence(void) {
     //east
     // bottom fence rail
     glBegin(GL_QUADS);
-    glColor3f(  1,  1,  1 );
+    glColor3f(  0.91,  0.76,  0.65 );
     glVertex3f(FENCE_SIZE, -FENCE_SIZE, 0.256 );
     glVertex3f(FENCE_SIZE, -FENCE_SIZE, 0.256+PICKET_WIDTH );
     glVertex3f(FENCE_SIZE, FENCE_SIZE, 0.256+PICKET_WIDTH );
@@ -52,7 +52,7 @@ void picket_fence(void) {
     glEnd();
     // top fence rail
     glBegin(GL_QUADS);
-    glColor3f(  1,  1,  1 );
+    glColor3f(  0.91,  0.76,  0.65 );
     glVertex3f(FENCE_SIZE, -FENCE_SIZE, 0.744 );
     glVertex3f(FENCE_SIZE, -FENCE_SIZE, 0.744-PICKET_WIDTH );
     glVertex3f(FENCE_SIZE, FENCE_SIZE, 0.744-PICKET_WIDTH );
@@ -62,7 +62,7 @@ void picket_fence(void) {
     // west
     // bottom fence rail
     glBegin(GL_QUADS);
-    glColor3f(  1,  1,  1 );
+    glColor3f(  0.91,  0.76,  0.65 );
     glVertex3f(-FENCE_SIZE, FENCE_SIZE, 0.256 );
     glVertex3f(-FENCE_SIZE, FENCE_SIZE, 0.256+PICKET_WIDTH );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.256+PICKET_WIDTH );
@@ -70,7 +70,7 @@ void picket_fence(void) {
     glEnd();
     // top fence rail
     glBegin(GL_QUADS);
-    glColor3f(  1,  1,  1 );
+    glColor3f(  0.91,  0.76,  0.65 );
     glVertex3f(-FENCE_SIZE, FENCE_SIZE, 0.744 );
     glVertex3f(-FENCE_SIZE, FENCE_SIZE, 0.744-PICKET_WIDTH );
     glVertex3f(-FENCE_SIZE, -FENCE_SIZE, 0.744-PICKET_WIDTH );
@@ -85,7 +85,7 @@ void picket_fence(void) {
         
         // north
         glBegin(GL_QUADS);
-        glColor3f(  1,  1,  1 );
+        glColor3f(  0.91,  0.76,  0.65 );
         glVertex3f( a, -FENCE_SIZE, 0 );
         glVertex3f( a+PICKET_WIDTH, -FENCE_SIZE, 0 );
         glVertex3f( a+PICKET_WIDTH, -FENCE_SIZE, FENCE_HEIGHT );
@@ -94,7 +94,7 @@ void picket_fence(void) {
         
         // south
         glBegin(GL_QUADS);
-        glColor3f(  1,  1,  1 );
+        glColor3f(  0.91,  0.76,  0.65 );
         glVertex3f( a, FENCE_SIZE, 0 );
         glVertex3f( a+PICKET_WIDTH, FENCE_SIZE, 0 );
         glVertex3f( a+PICKET_WIDTH, FENCE_SIZE, FENCE_HEIGHT );
@@ -104,7 +104,7 @@ void picket_fence(void) {
         
         // east
         glBegin(GL_QUADS);
-        glColor3f(  1,  1,  1 );
+        glColor3f(  0.91,  0.76,  0.65 );
         glVertex3f( FENCE_SIZE,       a, 0 );
         glVertex3f( FENCE_SIZE, a+PICKET_WIDTH, 0 );
         glVertex3f( FENCE_SIZE, a+PICKET_WIDTH, FENCE_HEIGHT );
@@ -113,7 +113,7 @@ void picket_fence(void) {
         
         // west
         glBegin(GL_QUADS);
-        glColor3f(  1,  1,  1 );
+        glColor3f(  0.91,  0.76,  0.65 );
         glVertex3f( -FENCE_SIZE,       a, 0 );
         glVertex3f( -FENCE_SIZE, a+PICKET_WIDTH, 0 );
         glVertex3f( -FENCE_SIZE, a+PICKET_WIDTH, FENCE_HEIGHT );
