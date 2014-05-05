@@ -14,7 +14,6 @@
 #endif
 
 
-
 /* START objects */
 #include "picket_fence.h"
 #include "drawSnowman.h"
@@ -23,11 +22,11 @@
 /* END objects */
 
 
-
 // escape key (for exit)
 #define ESC 27
 
 #define MIN_VIEW_HEIGHT 0.1
+#define UPDATE_FREQ 5
 
 //----------------------------------------------------------------------
 // Global variables
@@ -99,7 +98,12 @@ void update(void)
     if (deltaMove) { // update camera position
         x += deltaMove * lx * 0.1;
         y += deltaMove * ly * 0.1;
+        update_count++;
+    }
+    
+    if (update_count == UPDATE_FREQ) {
         //printf("%f, %f\n", x,y);
+        update_count = 0;
     }
     
     if (cameraHeightMove == 1) {
@@ -144,12 +148,11 @@ void render_objects(void) {
             if ( (i==0)&&(j==0) ) {
                 continue;
             }
+            
             glPushMatrix();
             glTranslatef(i*12, j*12, 0);
-            // Draw 36 snow men
             drawSnowman();
             picket_fence();
-            
             glPopMatrix();
         }
     }
@@ -259,8 +262,9 @@ void mouseMove(int x, int y)
     }
 }
 
-void mouseButton(int button, int state, int x, int y)
-{
+void mouseButton(int button, int state, int x, int y) {
+    int r=glutGetModifiers();
+    
     if (button == GLUT_LEFT_BUTTON) {
         if (state == GLUT_DOWN) { // left mouse button pressed
             isDragging = 1; // start dragging
@@ -270,6 +274,16 @@ void mouseButton(int button, int state, int x, int y)
             angle += deltaAngle; // update camera turning angle
             isDragging = 0; // no longer dragging
         }
+    }
+    if (r == GLUT_ACTIVE_CTRL) {
+        if (button == GLUT_LEFT_BUTTON) {
+            cameraHeightMove = 1;
+        }
+        if (button == GLUT_RIGHT_BUTTON) {
+            cameraHeightMove = 2;
+        }
+    } else {
+        cameraHeightMove = 0;
     }
 }
 
@@ -304,7 +318,6 @@ int main(int argc, char **argv)
     glutMotionFunc(mouseMove); // process mouse dragging motion
     glutKeyboardFunc(processNormalKeys); // process standard key clicks
     glutSpecialFunc(pressSpecialKey); // process special key pressed
-                                      // Warning: Nonstandard function! Delete if desired.
     glutSpecialUpFunc(releaseSpecialKey); // process special key release
     
     // OpenGL init
