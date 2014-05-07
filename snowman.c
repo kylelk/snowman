@@ -49,7 +49,8 @@ float sx = 0.0, sy = 1.0; // camera side position
 float deltaMove = 0.0; // initially camera doesn't move
 float sideMove = 0.0;
 float cameraHeightMove = 0.0;
-float camera_height = 1.0;
+
+float camera_height = 1.5;
 
 // Camera direction
 float lx = 0.0, ly = 1.0; // camera points initially along y-axis
@@ -102,7 +103,8 @@ void update(void)
     }
     
     if (update_count == UPDATE_FREQ) {
-        //printf("%f, %f\n", x,y);
+        //printf("%f, %f\n", round(x), round(y));
+        //printf("%f\n", camera_height);
         update_count = 0;
     }
     
@@ -138,18 +140,17 @@ void render_objects(void) {
     glVertex3f( 100.0, -100.0, 0.0);
     glEnd();
     
-    
-    // render the center of the town
-    town_square();
-    
     for(i = -3; i < 4; i++){
         for(j = -3; j < 4; j++) {
             // skip drawing in the center
             if ( (i==0)&&(j==0) ) {
+                // render the center of the town
+                town_square();
                 continue;
             }
             
             glPushMatrix();
+            
             glTranslatef(i*12, j*12, 0);
             drawSnowman();
             picket_fence();
