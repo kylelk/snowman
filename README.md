@@ -4,8 +4,6 @@ snowman
 simple openGL game
 
 <h4>movement<h4>
-<hr>
-
 
 move the camera left and right using the mouse
 
