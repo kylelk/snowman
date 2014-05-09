@@ -3,10 +3,12 @@ snowman
 
 simple openGL game
 
-move the cammera and look around using the left mouse button 
+===movement===
 
-move forward with the arrow keys
+move the camera left and right using the mouse
 
-use the page up and page down keys to change the cammera height
+move forward and back with the arrow keys
+
+move the cammera with the page up and page down keys
 
 ![screenshot](https://github.com/kylelk/snowman/raw/master/snowman_land.png "screenshot")
