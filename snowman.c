@@ -1,6 +1,5 @@
 // gcc -o snowman snowman.c -framework GLUT -framework OpenGL
 
-
 #include <stdlib.h> // standard definitions
 #include <math.h> // math definitions
 #include <stdio.h> // standard I/O
@@ -12,7 +11,6 @@
 #else
 #include <GL/glut.h>
 #endif
-
 
 /* START objects */
 #include "picket_fence.h"
@@ -26,7 +24,11 @@
 #define ESC 27
 
 #define MIN_VIEW_HEIGHT 0.1
-#define UPDATE_FREQ 5
+#define UPDATE_FREQ 10
+#define PROXIMITY 3
+
+//#define FULLSCREEN_MODE 1
+#define SHOW_XY 1
 
 //----------------------------------------------------------------------
 // Global variables
@@ -51,6 +53,8 @@ float sideMove = 0.0;
 float cameraHeightMove = 0.0;
 
 float camera_height = 1.5;
+#define CAMERA_MOVE_UP 1
+#define CAMERA_MOVE_DOWN 2
 
 // Camera direction
 float lx = 0.0, ly = 1.0; // camera points initially along y-axis
@@ -63,8 +67,6 @@ int xDragStart = 0; // records the x-coordinate when dragging starts
 
 
 int update_count = 0;
-unsigned int random_snowmen[36];
-
 
 //----------------------------------------------------------------------
 // Reshape callback
@@ -99,30 +101,19 @@ void update(void)
     if (deltaMove) { // update camera position
         x += deltaMove * lx * 0.1;
         y += deltaMove * ly * 0.1;
-        update_count++;
     }
     
-    if (update_count == UPDATE_FREQ) {
-        //printf("%f, %f\n", round(x), round(y));
-        //printf("%f\n", camera_height);
-        update_count = 0;
+    if (cameraHeightMove == CAMERA_MOVE_UP) {
+        camera_height += 0.050;
     }
-    
-    if (cameraHeightMove == 1) {
-        camera_height += 0.1;
-    }
-    else if (cameraHeightMove == 2){
-        camera_height -= 0.1;
+    else if (cameraHeightMove == CAMERA_MOVE_DOWN){
+        camera_height -= 0.050;
         
         if (camera_height < MIN_VIEW_HEIGHT) {
             camera_height=0.1;
         }
-
+        
     }
-//    if (sideMove == 1) {
-//    }
-//    else if (sideMove == 2){
-//    }
     glutPostRedisplay(); // redisplay everything
 }
 
@@ -133,11 +124,11 @@ void render_objects(void) {
     
     // Draw ground - 200x200 square colored green
     glColor3f(0.0, 0.7, 0.0);
-    glBegin(GL_QUADS);
-    glVertex3f(-100.0, -100.0, 0.0);
-    glVertex3f(-100.0,  100.0, 0.0);
-    glVertex3f( 100.0,  100.0, 0.0);
-    glVertex3f( 100.0, -100.0, 0.0);
+        glBegin(GL_QUADS);
+        glVertex3f(-100.0, -100.0, 0.0);
+        glVertex3f(-100.0,  100.0, 0.0);
+        glVertex3f( 100.0,  100.0, 0.0);
+        glVertex3f( 100.0, -100.0, 0.0);
     glEnd();
     
     for(i = -3; i < 4; i++){
@@ -149,12 +140,21 @@ void render_objects(void) {
                 continue;
             }
             
-            glPushMatrix();
+            if (deltaMove) {
+                update_count++;
+                if (update_count == UPDATE_FREQ) {
+                    
+                    update_count = 0;
+                }
+            }
             
-            glTranslatef(i*12, j*12, 0);
-            drawSnowman();
-            picket_fence();
+            
+            glPushMatrix();
+                glTranslatef(i*12, j*12, 0);
+                drawSnowman();
+                picket_fence();
             glPopMatrix();
+            
         }
     }
     road();
@@ -239,7 +239,7 @@ void releaseSpecialKey(int key, int x, int y)
         case GLUT_KEY_PAGE_DOWN:
             cameraHeightMove = 0.0;
             break;
-
+            
     }
 }
 
@@ -307,8 +307,9 @@ int main(int argc, char **argv)
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(800, 500);
     glutCreateWindow("snowman land");
-    //glutFullScreen();
-
+    #ifdef FULLSCREEN_MODE
+    glutFullScreen();
+    #endif
     
     // register callbacks
     glutReshapeFunc(changeSize); // window reshape callback
