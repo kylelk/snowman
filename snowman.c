@@ -27,7 +27,7 @@
 #define UPDATE_FREQ 10
 #define PROXIMITY 3
 
-//#define FULLSCREEN_MODE 1
+//#define FULLSCREEN_MODE
 #define SHOW_XY 1
 
 //----------------------------------------------------------------------
@@ -293,7 +293,7 @@ void mouseButton(int button, int state, int x, int y) {
 //----------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-    printf("\n\
+    //printf("\n\
            -----------------------------------------------------------------------\n\
            OpenGL snowman game:\n\
            - Drag mouse left-right to rotate camera\n\
@@ -305,7 +305,7 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);
-    glutInitWindowSize(800, 500);
+    glutInitWindowSize(1000, 600);
     glutCreateWindow("snowman land");
     #ifdef FULLSCREEN_MODE
     glutFullScreen();
