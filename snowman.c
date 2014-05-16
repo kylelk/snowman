@@ -5,6 +5,8 @@
 #include <stdio.h> // standard I/O
 #include <string.h>
 
+#include "libbmpread/bmpread.h"
+
 // include files are in a slightly different location for MacOS
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -12,7 +14,10 @@
 #include <GL/glut.h>
 #endif
 
+#include "LoadTexture.h"
+
 /* START objects */
+#include "ground.h"
 #include "picket_fence.h"
 #include "drawSnowman.h"
 #include "road.h"
@@ -27,7 +32,7 @@
 #define UPDATE_FREQ 10
 #define PROXIMITY 3
 
-//#define FULLSCREEN_MODE
+#define FULLSCREEN_MODE
 #define SHOW_XY 1
 
 //----------------------------------------------------------------------
@@ -49,7 +54,6 @@
 float x = 0.0, y = -5.0; // initially 5 units south of origin
 float sx = 0.0, sy = 1.0; // camera side position
 float deltaMove = 0.0; // initially camera doesn't move
-float sideMove = 0.0;
 float cameraHeightMove = 0.0;
 
 float camera_height = 1.5;
@@ -122,14 +126,7 @@ void render_objects(void) {
     
     int i, j;
     
-    // Draw ground - 200x200 square colored green
-    glColor3f(0.0, 0.7, 0.0);
-        glBegin(GL_QUADS);
-        glVertex3f(-100.0, -100.0, 0.0);
-        glVertex3f(-100.0,  100.0, 0.0);
-        glVertex3f( 100.0,  100.0, 0.0);
-        glVertex3f( 100.0, -100.0, 0.0);
-    glEnd();
+    ground();
     
     for(i = -3; i < 4; i++){
         for(j = -3; j < 4; j++) {
