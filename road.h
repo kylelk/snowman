@@ -6,8 +6,8 @@ void road(void) {
     
     for(i = -3; i < 3; i++){
         for(j = -3; j < 3; j++) {
-            
             glPushMatrix();
+            glColor3f(0.75, 0.75, 0.75);
             glBindTexture(GL_TEXTURE_2D, tex2);
             // street
             // north
@@ -39,7 +39,6 @@ void road(void) {
                 glVertex3f( (i*12)+4,  40, 0.003 );
             glEnd();
 
-            glColor3f(0.75, 0.75, 0.75);
             glPopMatrix();
         }
     }

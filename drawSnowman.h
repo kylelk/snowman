@@ -51,13 +51,13 @@ void drawSnowman()
     
     glPopMatrix();
     
-    // Draw a faux shadow beneath snow man (dark green circle)
-    glPushMatrix();
-        glColor3f(0.0, 0.5, 0.0);
-        glTranslatef(0.2, 0.2, 0.001);	// translate to just above ground
-        glScalef(1.0, 1.0, 0.0); // scale sphere into a flat pancake
-        glutSolidSphere(0.75, 20, 20); // shadow same size as body
-    glPopMatrix();
+//    // Draw a faux shadow beneath snow man (dark green circle)
+//    glPushMatrix();
+//        glColor3f(0.0, 0.5, 0.0);
+//        glTranslatef(0.2, 0.2, 0.001);	// translate to just above ground
+//        glScalef(1.0, 1.0, 0.0); // scale sphere into a flat pancake
+//        glutSolidSphere(0.75, 20, 20); // shadow same size as body
+//    glPopMatrix();
     
     
     glPushMatrix();

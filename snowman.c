@@ -33,7 +33,8 @@
 #define PROXIMITY 3
 
 #define FULLSCREEN_MODE
-#define SHOW_XY 1
+#define WINDOW_SIZE 1000,600
+
 
 //----------------------------------------------------------------------
 // Global variables
@@ -302,7 +303,7 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);
-    glutInitWindowSize(1000, 600);
+    glutInitWindowSize(WINDOW_SIZE);
     glutCreateWindow("snowman land");
     #ifdef FULLSCREEN_MODE
     glutFullScreen();
