@@ -115,4 +115,24 @@ void drawSnowman()
         glColor3f(0.75, 0.75, 0.75);
         glutSolidTorus(0.075, 1.75, 32, 32);
     glPopMatrix();
+    
+//    glEnable(GL_TEXTURE_2D);
+//    GLuint brick_texture = LoadTexture("textures/stone.bmp");
+//    glPushMatrix();
+//        glBindTexture(GL_TEXTURE_2D, brick_texture);
+//        glBegin(GL_QUADS);
+//            glTexCoord3f(-0.75, 4, 0.004);
+//            glVertex3f(-0.75, 4, 0.004);
+//            
+//            glTexCoord3f(-0.75, 0, 0.004);
+//            glVertex3f(-0.75, 0, 0.004);
+//    
+//            glTexCoord3f( 0.75,  0, 0.004);
+//            glVertex3f( 0.75,  0, 0.004);
+//            
+//            glTexCoord3f( 0.75, 4, 0.004);
+//            glVertex3f( 0.75, 4, 0.004);
+//        glEnd();
+//    glPopMatrix();
+//    glDisable(GL_TEXTURE_2D);
 }

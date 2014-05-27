@@ -113,5 +113,7 @@ void obelisk(void) {
 }
 
 void town_square(void) {
-    obelisk();
+    glPushMatrix();
+        obelisk();
+    glPopMatrix();
 }

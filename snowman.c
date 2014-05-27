@@ -30,10 +30,15 @@
 
 #define MIN_VIEW_HEIGHT 0.1
 #define UPDATE_FREQ 10
-#define PROXIMITY 3
+#define PROXIMITY 5
 
 #define FULLSCREEN_MODE
 #define WINDOW_SIZE 1000,600
+
+struct point {
+    float x,y;
+};
+typedef struct point location;
 
 
 //----------------------------------------------------------------------
@@ -52,7 +57,7 @@
 //----------------------------------------------------------------------
 
 // Camera position
-float x = 0.0, y = -5.0; // initially 5 units south of origin
+float x = 0.0, y = -5.0, z = 0.0; // initially 5 units south of origin
 float sx = 0.0, sy = 1.0; // camera side position
 float deltaMove = 0.0; // initially camera doesn't move
 float cameraHeightMove = 0.0;
@@ -62,7 +67,7 @@ float camera_height = 1.5;
 #define CAMERA_MOVE_DOWN 2
 
 // Camera direction
-float lx = 0.0, ly = 1.0; // camera points initially along y-axis
+float lx = 0.0, ly = 1.0, lz = 0.0; // camera points initially along y-axis
 float angle = 0.0; // angle of rotation for the camera direction
 float deltaAngle = 0.0; // additional angle change when dragging
 
@@ -70,8 +75,15 @@ float deltaAngle = 0.0; // additional angle change when dragging
 int isDragging = 0; // true when dragging
 int xDragStart = 0; // records the x-coordinate when dragging starts
 
+location xy_pos;
+location last_xy;
 
-int update_count = 0;
+float last_distance=0;
+
+float xd, yd;
+float distance;
+float x2=0, y2=0;
+uint8_t update_count = 0;
 
 //----------------------------------------------------------------------
 // Reshape callback
@@ -101,11 +113,21 @@ void changeSize(int w, int h)
 // This incrementally moves the camera and requests that the scene be
 // redrawn.
 //----------------------------------------------------------------------
-void update(void)
-{
+void update(void) {
+    
     if (deltaMove) { // update camera position
         x += deltaMove * lx * 0.1;
         y += deltaMove * ly * 0.1;
+        z += deltaMove * lz * 0.1;
+        
+        if (update_count >= UPDATE_FREQ) {
+            if (x < -39) { x = -39; }
+            else if (x > 39) { x = 39; }
+            
+            if (y < -39) { y = -39; }
+            else if (y > 39) { y = 39; }
+        }
+        update_count++;
     }
     
     if (cameraHeightMove == CAMERA_MOVE_UP) {
@@ -122,7 +144,6 @@ void update(void)
     glutPostRedisplay(); // redisplay everything
 }
 
-
 void render_objects(void) {
     
     int i, j;
@@ -137,15 +158,6 @@ void render_objects(void) {
                 town_square();
                 continue;
             }
-            
-            if (deltaMove) {
-                update_count++;
-                if (update_count == UPDATE_FREQ) {
-                    
-                    update_count = 0;
-                }
-            }
-            
             
             glPushMatrix();
                 glTranslatef(i*12, j*12, 0);
@@ -181,7 +193,6 @@ void renderScene(void)
               x,      y,      camera_height,
               x + lx, y + ly, camera_height,
               0.0,    0.0,    camera_height);
-    
     
     render_objects();
     
@@ -258,6 +269,7 @@ void mouseMove(int x, int y)
         // camera's direction is set to angle + deltaAngle
         lx = -sin(angle + deltaAngle);
         ly = cos(angle + deltaAngle);
+        lz = -cos(angle + deltaAngle);
     }
 }
 
@@ -292,12 +304,12 @@ void mouseButton(int button, int state, int x, int y) {
 int main(int argc, char **argv)
 {
     //printf("\n\
-           -----------------------------------------------------------------------\n\
-           OpenGL snowman game:\n\
-           - Drag mouse left-right to rotate camera\n\
-           - Hold up-arrow/down-arrow to move camera forward/backward\n\
-           - q or ESC to quit\n\
-           -----------------------------------------------------------------------\n");
+       -----------------------------------------------------------------------\n\
+       OpenGL snowman game:\n\
+       - Drag mouse left-right to rotate camera\n\
+       - Hold up-arrow/down-arrow to move camera forward/backward\n\
+       - q or ESC to quit\n\
+       -----------------------------------------------------------------------\n");
     
     // general initializations
     glutInit(&argc, argv);
