@@ -85,6 +85,8 @@ float distance;
 float x2=0, y2=0;
 uint8_t update_count = 0;
 
+float n_x, n_y;
+
 //----------------------------------------------------------------------
 // Reshape callback
 //
@@ -106,6 +108,19 @@ void changeSize(int w, int h)
     glViewport(0, 0, w, h); // set viewport (drawing area) to entire window
 }
 
+int near_mult(float n, int m) {
+    if (n > 0){
+        return ceil(n/m) * m;
+    }
+    else if ( n < 0) {
+        return floor(n/m) * n;
+    }
+    else {
+        return m;
+    }
+}
+
+
 
 //----------------------------------------------------------------------
 // Update with each idle event
@@ -126,6 +141,11 @@ void update(void) {
             
             if (y < -39) { y = -39; }
             else if (y > 39) { y = 39; }
+            
+            n_x = near_mult(x,12);
+            n_y = near_mult(y,12);
+            
+            //printf("%d %d\n", n_x, n_y);
         }
         update_count++;
     }
