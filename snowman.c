@@ -34,6 +34,7 @@
 
 #define FULLSCREEN_MODE
 #define WINDOW_SIZE 1000,600
+//#define USE_LIGHTING
 
 struct point {
     float x,y;
@@ -203,6 +204,9 @@ void renderScene(void)
     // Clear color and depth buffers
     glClearColor(0.0, 0.7, 1.0, 1.0); // sky color is light blue
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    #ifdef USE_LIGHTING
+    glEnable(GL_COLOR_MATERIAL);
+    #endif
     
     // Reset transformations
     glLoadIdentity();
@@ -215,7 +219,9 @@ void renderScene(void)
               0.0,    0.0,    camera_height);
     
     render_objects();
-    
+    #ifdef USE_LIGHTING
+    glDisable(GL_COLOR_MATERIAL);
+    #endif
     glutSwapBuffers(); // Make it all visible
 }
 
@@ -306,6 +312,11 @@ void mouseButton(int button, int state, int x, int y) {
             isDragging = 0; // no longer dragging
         }
     }
+    
+    if (button == GLUT_MIDDLE_BUTTON){
+        deltaMove = 0.0;
+    }
+    
     if (r == GLUT_ACTIVE_CTRL) {
         if (button == GLUT_LEFT_BUTTON) {
             cameraHeightMove = 1;
@@ -351,6 +362,15 @@ int main(int argc, char **argv)
     glutKeyboardFunc(processNormalKeys); // process standard key clicks
     glutSpecialFunc(pressSpecialKey); // process special key pressed
     glutSpecialUpFunc(releaseSpecialKey); // process special key release
+    
+    #ifdef USE_LIGHTING
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_DEPTH_TEST);
+    
+    GLfloat lightpos[] = {0, 0, 50, 1};
+    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+    #endif
     
     // OpenGL init
     glEnable(GL_DEPTH_TEST);
